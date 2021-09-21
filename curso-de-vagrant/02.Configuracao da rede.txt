@@ -1,0 +1,45 @@
+Acessar o site e pegar a configuração do Vagrantfile:
+https://app.vagrantup.com/boxes/search?utf8=%E2%9C%93&sort=downloads&provider=&q=ubuntu
+
+https://app.vagrantup.com/ubuntu/boxes/bionic64
+
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+end
+
+criar um arquivo com o nome Vagrantfile e colar o conteudo
+
+rodar o comando vagrant up
+
+
+Pagina da Documentação:
+https://www.vagrantup.com/docs
+
+Instalando o nginx
+
+sudo apt-get update
+
+sudo apt-get install -y nginx
+
+netstat -lntp
+l = listen
+n = numero port
+t = protocolo tcp
+p = processo
+
+
+curl http://localhost
+
+Docs Defining a Forwarded Port
+add o comando no Vagrant
+config.vm.network "forwarded_port", guest: 80, host: 8089
+
+Static IP
+config.vm.network "private_network", ip: "192.168.50.4"
+
+Destruir e recriar um VM
+vagrant destroy -f
+-f = forçar
+
+Public Networks
