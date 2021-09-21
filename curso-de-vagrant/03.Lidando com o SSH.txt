@@ -1,0 +1,27 @@
+acessando o VM via ssh
+
+ssh vagrant@192.168.0.80
+
+pedando o endereço da chave privada
+vagrant ssh-config
+
+passando como paramentro a chave privada
+ssh -i .vagrant/machines/default/virtualbox/private_key vagrant@192.168.0.80
+
+
+Gerando uma  chave propria
+ssh-keygen -t rsa
+Local onde será saldo a chave: /d/ambiente_dev/bionic/id_bionic 
+
+
+Neste passo, veremos como gerar nossa própria chave privada para permitir o acesso de outros desenvolvedores à máquina virtual.
+
+Começamos encerrando com vagrant@ubuntu-bionic:~$ exit no terminal e retornando ao Windows escrevendo vagrant status. Para criar a chave, utilizamos o PuTTY ou, caso já tenha o SSH instalado no sistema operacional, existe uma metodologia bem fácil.
+
+Insira o comando ssh-keygen -t rsa para escolher a pasta onde será salva. Aqui, basta escrever /d/ambiente_dev/bionic/id_bionic. Depois o sistema nos pede para criar uma senha de acesso para protegê-la caso queira, gerando uma imagem com caracteres para gerar a chave. Em seguida, ao limparmos a tela e escrevermos ls, ambas nos são apresentadas.
+
+Agora precisamos copiar nossa chave pública para a máquina virtual; começamos por digitar vagrant ssh e acessar a pasta com ls /vagrant/ que é automaticamente montada no Windows.
+
+Copiamos a chave publica da pasta "vagrant" para a máquina virtual escrevendo cp /vagrant/id_bionic.pub ., sendo possível ser visualizada com ls novamente. Precisamos adicioná-la ao arquivo "authorized_keys" digitando cat id_bionic.pub >> .ssh/authorized_keys. Veja a nova chave adicionada com cat .ssh/authorized_keys. Finalize com exit para retornar ao Windows.
+
+Agora, usaremos a chave privada no Windows para nos conectar usando ssh -i id_bionic vagrant@192.168.1.24, lembrando que o seu IP pode variar. É possível assim se conectar remotamente com sua máquina virtual baseado em uma chave pública/privada desde que as tenha associadas com a chave privada dentro da MV
