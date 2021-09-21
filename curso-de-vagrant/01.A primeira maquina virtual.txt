@@ -1,0 +1,12 @@
+A primeira máquina virtual
+
+Criando o ambiente de trabalho
+1 - mkdir workspace-vagrant
+
+2 - vagrant init hashicorp/bionic64
+
+3 - vagrant status
+
+4 - vagrant ssh
+
+5 - vagrant halt
