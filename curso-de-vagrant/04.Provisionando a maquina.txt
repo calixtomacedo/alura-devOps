@@ -1,0 +1,62 @@
+Provisionamento 
+https://www.vagrantup.com/docs/provisioning/shell
+
+Vagrant.configure("2") do |config|
+  config.vm.provision "shell",
+    inline: "echo Hello, World >> hello.txt"
+end
+
+vagrant reload
+vagrant provision
+vagrant ssh
+cat hello.txt
+
+pasta criada dentro do vagrant
+ls /vagrant
+
+cat .ssh/authorized_keys
+
+
+https://www.vagrantup.com/docs/synced-folders/basic_usage
+Basic Usage
+Vagrant.configure("2") do |config|
+  # other config here
+
+  config.vm.synced_folder "src/", "/srv/website"
+end
+
+
+config.vm.synced_folder "./configs", "/configs"
+config.vm.synced_folder ".", "/vagrant", disabled: true
+vagrant destroy -f && vagrant up
+vagrant ssh
+cat .ssh/authorized_keys
+exit
+
+ssh -i id_bionic vagrant@192.168.0.80
+apagar o known_hosts caso necessario
+
+Instalando o mysql
+https://www.vagrantup.com/docs/provisioning/shell
+
+$script_mysql = <<-SCRIPT
+	apt-get update && \
+	apt-get install -y mysql-server-5.7 && \
+	mysql -e "create user 'phpuser'@'%' identified by 'pass';"
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.provision "shell", inline: $script_mysql
+end
+
+vagrant destroy -f && vagrant up
+
+sudo mysql
+select user from mysql.user;
+exit
+
+ cat /etc/mysql/mysql.conf.d/mysqld.cnf
+ cat /etc/mysql/mysql.conf.d/mysqld.cnf >> /configs/mysqld.cnf
+config.vm.provision "shell", inline: "cat /configs/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf"
+config.vm.provision "shell", inline: "service mysql restart"
+vagrant destroy -f && vagrant up

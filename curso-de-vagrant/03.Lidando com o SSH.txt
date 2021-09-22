@@ -11,7 +11,7 @@ ssh -i .vagrant/machines/default/virtualbox/private_key vagrant@192.168.0.80
 
 Gerando uma  chave propria
 ssh-keygen -t rsa
-Local onde será saldo a chave: /d/ambiente_dev/bionic/id_bionic 
+Local onde será saldo a chave: /d/cmdev/alura/devops/curso-de-vagrant/bionic64/configs/id_bionic 
 
 
 Neste passo, veremos como gerar nossa própria chave privada para permitir o acesso de outros desenvolvedores à máquina virtual.
