@@ -1,0 +1,92 @@
+https://www.vagrantup.com/docs/multi-machine
+
+  config.vm.define "db" do |db|
+    db.vm.box = "mysql"
+  end
+
+
+Várias máquinas
+$script_mysql = <<-SCRIPT
+	apt-get update && \
+	apt-get install -y mysql-server-5.7 && \
+	mysql -e "create user 'phpuser'@'%' identified by 'pass';"
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  
+  config.vm.define "mysqldb" do |mysql|
+    	mysql.vm.provision "shell", inline: "cat /configs/id_bionic.pub >> .ssh/authorized_keys"
+ 	mysql.vm.provision "shell", inline: $script_mysql
+	mysql.vm.provision "shell", inline: "cat /configs/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf"
+	mysql.vm.provision "shell", inline: "service mysql restart"
+	  
+	mysql.vm.synced_folder "./configs", "/configs"
+	mysql.vm.synced_folder ".", "/vagrant", disabled: true
+  end
+  
+  config.vm.define "phpweb" do |phpweb|
+    phpweb.vm.network "forwarded_port", guest: 80, host: 8089
+    phpweb.vm.network "public_network", ip: "192.168.0.81"
+  end
+
+end
+
+
+
+https://www.vagrantup.com/docs/provisioning/puppet_apply
+https://www.digitalocean.com/community/tutorials/getting-started-with-puppet-code-manifests-and-modules
+
+# execute 'apt-get update'
+exec { 'apt-update':
+    command => '/usr/bin/apt-get update' 
+}
+
+package { ['php7.2', 'php7.2-mysql'] :
+    require => Exec['apt-update'],
+    ensure => installed,
+}
+
+exec { 'run-php7':
+    require => Package['php7.2'],
+    command => '/usr/bin/php -S 0.0.0.0:8888 -t /vagrant/src &'
+}
+
+Para testar, vá ao terminal e insira vagrant ssh phpweb para chamar este novo arquivo com a entrada ls /vagrant/configs/manifests/.
+
+Precisamos instalar o Puppet executando sudo apt-get update && sudo apt-get install -y puppet.
+
+Limpe a tela e ative-o com sudo puppet apply /vagrant/configs/manifests/phpweb.pp.
+
+Para testar a execução do PHP, devemos realizar alguns ajustes que veremos no passo seguinte.
+netstat -ntlp
+
+  config.vm.define "phpweb" do |phpweb|
+    phpweb.vm.network "forwarded_port", guest: 80, host: 8089
+	phpweb.vm.network "public_network", ip: "192.168.0.81"
+	
+	phpweb.vm.provision "shell", inline: "apt-get update && apt-get install -y puppet"
+	
+	phpweb.vm.provision "puppet" do |puppet|
+      puppet.manifests_path = "./configs/manifests"
+      puppet.manifest_file = "phpweb.pp"
+    end
+	
+  end
+
+index.php
+<?php
+echo "Testando conexao <br /> <br />";
+$servername = "192.168.0.80";
+$username = "phpuser";
+$password = "pass";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}
+echo "Conectado com sucesso";
+?>
