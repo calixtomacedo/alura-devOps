@@ -10,3 +10,7 @@ Criando o ambiente de trabalho
 4 - vagrant ssh
 
 5 - vagrant halt
+
+
+vagrant up
+vagrant destroy -f
