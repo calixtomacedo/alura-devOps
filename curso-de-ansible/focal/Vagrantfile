@@ -3,62 +3,23 @@ Vagrant.configure("2") do |config|
 	
 	config.vm.box = "ubuntu/focal64"
 	
-	# Criando a VM Ansible - Defining Multiple Machines
-=begin 
-	config.vm.define "ansible" do |ansible|
-	
-		# Providers -> Configuration
-		ansible.vm.provider "virtualbox" do |vb|
-			vb.name = "Ubuntu 20.04.3 LTS - Ansible"
-			vb.memory = 1024
-			vb.cpus = 2
-		end
-		
-		ansible.vm.network "public_network", ip: "192.168.0.30"
-			
-		# Provisioning -> Shell
-		ansible.vm.provision "shell", inline: "cat /configs/id_focal.pub >> .ssh/authorized_keys"
-		
-		# ansible.vm.provision "shell",
-			# inline: "cp /vagrant/id_focal /home/vagrant && \
-					 # chmod 600 /home/vagrant/id_focal && \
-					 # chown vagrant:vagrant /home/vagrant/id_focal"
-				
-		# Synced Folders
-		ansible.vm.synced_folder "./configs", "/configs"
-		ansible.vm.synced_folder ".", "/vagrant", disabled: true
-		
-		ansible.vm.provision "shell", 
-			inline: "apt update && \
-					 apt install -y net-tools && \
-					 apt install -y software-properties-common && \
-					 apt-add-repository --yes --update ppa:ansible/ansible && \
-					 apt install -y virtualbox && \
-					 apt install -y vagrant && \					 
-					 apt install -y ansible"
-			
-		ansible.vm.provision "shell", inline: "echo VM Ubuntu 20.04.3 LTS - Ansible criada e pronta para uso."
-		
-	end
-=end
-	# Criando a VM Wordpress
-	
 	config.vm.define "wordpress" do |wordpress|
 		
 		wordpress.vm.provider "virtualbox" do |vb|
-			vb.name = "Ubuntu_20_04_3 LTS - Wordpress"
+			vb.name = "Ubuntu 20.04.3 LTS - Wordpress"
 			vb.memory = 1024
 			vb.cpus = 2
 		end
 		
-		wordpress.vm.network "public_network", ip: "192.168.0.30"
+		wordpress.vm.network "private_network", ip: "10.10.10.11"
+		#wordpress.vm.network "public_network", ip: "192.168.0.30"
 		
-		wordpress.vm.provision "shell", inline: "cat /configs/id_focal.pub >> .ssh/authorized_keys"
+		#wordpress.vm.provision "shell", inline: "cat /configs/id_focal.pub >> .ssh/authorized_keys"
 		
-		wordpress.vm.synced_folder "./configs", "/configs"
-		wordpress.vm.synced_folder ".", "/vagrant", disabled: true
+		#wordpress.vm.synced_folder "./configs", "/configs"
+		#wordpress.vm.synced_folder ".", "/vagrant", disabled: true
 		
-		wordpress.vm.provision "shell", inline: "apt-get update && apt-get install -y net-tools"
+		#wordpress.vm.provision "shell", inline: "apt-get update && apt-get install -y net-tools"
 		wordpress.vm.provision "shell", inline: "echo VM Ubuntu 20.04.3 LTS - Wordpress criada e pronta para uso."
 		
 	end	 

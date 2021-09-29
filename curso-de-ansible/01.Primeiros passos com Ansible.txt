@@ -1,20 +1,39 @@
 Criando a VM para trabalhar com o Ansible
 
-vagrant init hashicorp/bionic64
 
 Vagrant.configure("2") do |config|
-
-	#config.vm.box = "hashicorp/bionic64"
-
-	config.vm.box = "ubuntu/trusty64"
-
-	config.vm.provider "virtualbox" do |v|
-		v.memory = 1024
-		vb.cpus = 2
-	end
-
+	
+	config.vm.box = "ubuntu/focal64"
+	
 	config.vm.define "wordpress" do |wordpress|
-		wordpress.vm.network "private_network", ip: "192.168.0.90"
-	end
+		
+		wordpress.vm.provider "virtualbox" do |vb|
+			vb.name = "Ubuntu 20.04.3 LTS - Wordpress"
+			vb.memory = 1024
+			vb.cpus = 2
+		end
+		
+		wordpress.vm.network "public_network", ip: "192.168.0.30"
+		
+		#wordpress.vm.provision "shell", inline: "cat /configs/id_focal.pub >> .ssh/authorized_keys"
+		
+		#wordpress.vm.synced_folder "./configs", "/configs"
+		#wordpress.vm.synced_folder ".", "/vagrant", disabled: true
+		
+		wordpress.vm.provision "shell", inline: "apt-get update && apt-get install -y net-tools"
+		wordpress.vm.provision "shell", inline: "echo VM Ubuntu 20.04.3 LTS - Wordpress criada e pronta para uso."
+		
+	end	 
 
 end
+
+ansible
+-u ==> User: Vagrant
+-i Inventario: hosts
+-m Módulo: shell
+-a Parametros
+
+ansible -u vagrant -i hosts -m shell -a 'echo Hello, World!'
+ansible wordpress -u vagrant -i hosts -m shell -a 'echo Hello, World!'
+ansible wordpress -u vagrant --private-key .vagrant/machines/wordpress/virtualbox/private_key -i hosts -m shell -a 'echo Hello, World!'
+ansible -vvvv wordpress -u vagrant --private-key .vagrant/machines/wordpress/virtualbox/private_key -i hosts -m shell -a 'echo Hello, World!'
