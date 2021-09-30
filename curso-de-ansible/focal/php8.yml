@@ -1,0 +1,46 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: 'Executar o install software-properties-common'
+      apt: 
+        name: software-properties-common
+
+    - name: 'Montar o Repo PHP 8.0'
+      apt_repository:
+        repo: ppa:ondrej/php
+   
+    - name: 'Atualizar o repo'
+      apt: 
+        update_cache: yes
+
+    - name: 'Instalar o PHP 8.0'
+      apt: 
+        name: php8.0
+        state: present
+
+    - name: 'Instala o Apache 2'
+      apt:
+        name: apache2
+        state: present
+
+    - name: 'instalar pilha de pacotes'
+      apt:
+        pkg:
+          - php8.0-mysql
+          - php8.0-curl
+          - php8.0-common
+          - php8.0-cgi
+          - php8.0-xsl
+          - php8.0-cgi
+          - php8.0-gd
+          - php8.0-mbstring
+          - php8.0-zip
+          - php8.0-xmlrpc
+          - php8.0-soap
+          - php8.0-intl
+          - libapache2-mod-php8.0
+        state: present
+        update_cache: yes
+
+...
