@@ -1,7 +1,106 @@
 ---
 - hosts: all
-  tasks:
-    - apt:
-        name: php8
-        state: latest
+  become: yes
+  
+  handlers:
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted
       become: yes
+
+  tasks:
+
+    - name: 'Montar o Repo PHP 8.0'
+      apt_repository:
+        repo: ppa:ondrej/php
+
+    - name: 'Insta a lista de pacotes de dependencias'
+      apt:
+        name: "{{ item }}"
+        state: present
+      become: yes
+      loop:
+        - software-properties-common
+        - php8.0
+        - apache2
+        - mysql-server-8.0
+
+    - name: 'instalar pilha de pacotes'
+      apt:
+        pkg: "{{ item }}"
+        state: present
+      become: yes
+      loop:
+        - php8.0-mysql
+        - php8.0-curl
+        - php8.0-common
+        - php8.0-cgi
+        - php8.0-xsl
+        - php8.0-cgi
+        - php8.0-gd
+        - php8.0-mbstring
+        - php8.0-zip
+        - php8.0-xmlrpc
+        - php8.0-soap
+        - php8.0-intl
+        - libapache2-mod-php8.0
+        - python3-pip
+        - libmysqlclient-dev
+        - python3-dev
+        - python3-mysqldb
+
+    - name: 'Cria p banco de dados MySQL'
+      mysql_db:
+        name: wordpressdb
+        login_user: root
+        state: present
+
+    - name: 'Crie o usuário do banco de dados com o nome wordpress_user com todos os privilégios do banco de dados'
+      mysql_user:
+        login_user: root
+        name: wordpress_user
+        password: 123456
+        priv: 'wordpressdb.*:ALL'
+        state: present
+      no_log: true
+        
+    - name: 'Baixa o arquivo de instalação do WordPress'
+      get_url:
+        url: https://wordpress.org/latest.tar.gz
+        dest: /tmp/wordpress.tar.gz
+
+    - name: 'Descompacta o Wordpress'
+      unarchive:
+        src: /tmp/wordpress.tar.gz
+        dest: /var/www
+        remote_src: yes
+      become: yes
+
+    - name: 'Cria uma cópia do arquivo wp-config-sample.php'
+      copy:
+        src: '/var/www/wordpress/wp-config-sample.php'
+        dest: '/var/www/wordpress/wp-config.php'
+        remote_src: yes
+      become: yes
+
+    - name: 'Configura o wp-config com os dados de acesso ao banco de dados'
+      replace:
+        path: '/var/www/wordpress/wp-config.php'
+        regexp: "{{ item.regex }}"
+        replace: "{{ item.value }}"
+      loop:
+        - { regex: 'database_name_here', value: 'wordpressdb' }
+        - { regex: 'username_here', value: 'wordpress_user' }
+        - { regex: 'password_here', value: '123456' }
+      become: yes
+
+    - name: 'Configura o Apache para servir o Wordpress'
+      copy: 
+        src: 'files/000-default.conf'
+        dest: '/etc/apache2/sites-available/000-default.conf'
+      become: yes
+      notify:
+        - restart apache
+
+...

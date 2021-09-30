@@ -1,0 +1,10 @@
+Alteração do hosts
+[wordpress]
+10.10.10.11 ansible_user=vagrant ansible_ssh_private_key_file="/home/cmdevub/cmdev/alura-devops/curso-de-ansible/focal/.vagrant/machines/wordpress/virtualbox/private_key"
+
+Antes de alterar o hosts
+ansible-playbook php_8_ubuntu.yml -u vagrant -i hosts --private-key .vagrant/machines/wordpress/virtualbox/private_key
+
+Depois de alterar o hosts
+ansible-playbook php_8_ubuntu.yml -i hosts --private-key .vagrant/machines/wordpress/virtualbox/private_key
+ansible-playbook php_8_ubuntu.yml -i hosts
