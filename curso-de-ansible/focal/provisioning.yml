@@ -62,26 +62,34 @@
 
     - name: 'Cria uma cópia do arquivomysqld.cnf wp-config-sample.php'
       copy:
-        src: '/var/www/wordpress/wp-config-sample.php'
-        dest: '/var/www/wordpress/wp-config.php'
+        src: "{{ wp_instalation_dir }}/wp-config-sample.php"
+        dest: "{{ wp_instalation_dir }}/wp-config.php"
         remote_src: yes
       become: yes
 
     - name: 'Configura o wp-config com os dados de acesso ao banco de dados'
       replace:
-        path: '/var/www/wordpress/wp-config.php'
+        path: "{{ wp_instalation_dir }}/wp-config.php"
         regexp: "{{ item.regex }}"
         replace: "{{ item.value }}"
       loop:
-        - { regex: 'database_name_here', value: 'wordpressdb' }
-        - { regex: 'username_here', value: 'wordpress_user' }
-        - { regex: 'password_here', value: '123456' }
-        - { regex: 'localhost', value: '192.168.0.31' }
+        - { regex: 'database_name_here', value: "{{ wp_db_name }}" }
+        - { regex: 'username_here', value: "{{ wp_db_username }}"}
+        - { regex: 'password_here', value: "{{ wp_db_password }}" }
+        - { regex: 'localhost', value: "{{ wp_database_ip }}" }
       become: yes
 
+ #   - name: 'Configura o Apache para servir o Wordpress'
+ #     copy: 
+ #       src: 'files/000-default.conf'
+ #       dest: '/etc/apache2/sites-available/000-default.conf'
+ #     become: yes
+ #     notify:
+ #       - restart apache
+      
     - name: 'Configura o Apache para servir o Wordpress'
-      copy: 
-        src: 'files/000-default.conf'
+      template: 
+        src: 'templates/000-default.conf.j2'
         dest: '/etc/apache2/sites-available/000-default.conf'
       become: yes
       notify:
@@ -112,22 +120,22 @@
 
     - name: 'Cria O banco de dados wordpressdb no MySQL'
       mysql_db:
-        name: wordpressdb
+        name: "{{ wp_db_name }}"
         login_user: root
         state: present
 
     - name: 'Crie o usuário do banco de dados com o nome wordpress_user com todos os privilégios do banco de dados'
       mysql_user:
         login_user: root
-        name: wordpress_user
-        password: 123456
-        priv: 'wordpressdb.*:ALL'
+        name: "{{ wp_db_username }}"
+        password: "{{ wp_db_password }}"
+        priv: "{{ wp_db_name }}.*:ALL"
         state: present
         host: "{{ item }}"
       loop:
         - 'localhost'
         - '127.0.0.1'
-        - '192.168.0.%'
+        - "{{ wp_network_range_ip }}"
       no_log: true
 
     - name: 'Configura o MySQL para aceitar conexões remotas'
