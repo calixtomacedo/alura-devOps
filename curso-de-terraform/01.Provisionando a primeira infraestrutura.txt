@@ -5,5 +5,26 @@
 [05:23] Bom, você pode pegar uma linha, incluir aqui no meio ou, simplesmente, no final você pode dizer que a variável path pega o teu home, importante, em letra maiúscula “PATH=“HOME/.local/bin”. Ela vai pegar esse diretório e vai incluir no path. Mas e o resto do path? Você coloca dois pontos (:), aqui o dólar “${PATH}”. E finalizando, “export PATH”. Só isso.
 
 
-PATH="HOME/.local/bin:${PATH}"
+link do download
+https://www.terraform.io/downloads.html
+
+baixar o terraform
+wget https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_linux_amd64.zip
+
+descompata
+unzip terraform_1.0.8_linux_amd64.zip
+
+nano .profile
+
+# CUSTOMIZANDO O PATH
+PATH="$HOME/.local/bin:${PATH}"
 export PATH
+
+source .profile
+echo $PATH
+
+
+Optei por essa maneira pois é como ensina na DOC
+move para uma pasta que esta no path
+sudo mv terraform /usr/local/bin/
+
