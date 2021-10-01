@@ -1,1 +1,7 @@
 06.Separando banco e aplicação
+
+Arquivo de config do mysql
+mysql antigos: cat /etc/mysql/my.cnf
+mysql 8: cat /etc/mysql/mysql.conf.d/mysqld.cnf
+
+
