@@ -28,14 +28,10 @@ Optei por essa maneira pois é como ensina na DOC
 move para uma pasta que esta no path
 sudo mv terraform /usr/local/bin/
 
-Versão atual do Python
-Python 2.7.18
-
-Atualizando o Python
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python3.9
 
 User name IAM
 terraform-aws
+
+Group name
+admin
 
