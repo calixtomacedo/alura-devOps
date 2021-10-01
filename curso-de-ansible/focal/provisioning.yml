@@ -3,147 +3,17 @@
 - hosts: wordpress
   become: yes
   
-  handlers:
-    - name: restart apache
-      service:
-        name: apache2
-        state: restarted
-      become: yes
-
-  tasks:
-    - name: 'Montar o Repo PHP 8.0'
-      apt_repository:
-        repo: ppa:ondrej/php
-
-    - name: 'Insta a lista de pacotes de dependencias'
-      apt:
-        name: "{{ item }}"
-        state: present
-      become: yes
-      loop:
-        - software-properties-common
-        - php8.0
-        - apache2
-
-    - name: 'instalar pilha de pacotes'
-      apt:
-        pkg: "{{ item }}"
-        state: present
-      become: yes
-      loop:
-        - php8.0-mysql
-        - php8.0-curl
-        - php8.0-common
-        - php8.0-cgi
-        - php8.0-xsl
-        - php8.0-cgi
-        - php8.0-gd
-        - php8.0-mbstring
-        - php8.0-zip
-        - php8.0-xmlrpc
-        - php8.0-soap
-        - php8.0-intl
-        - libapache2-mod-php8.0
-        - python3-pip
-        - libmysqlclient-dev
-        - python3-dev
-
-    - name: 'Baixa o arquivo de instalação do WordPress'
-      get_url:
-        url: https://wordpress.org/latest.tar.gz
-        dest: /tmp/wordpress.tar.gz
-
-    - name: 'Descompacta o Wordpress'
-      unarchive:
-        src: /tmp/wordpress.tar.gz
-        dest: /var/www
-        remote_src: yes
-      become: yes
-
-    - name: 'Cria uma cópia do arquivomysqld.cnf wp-config-sample.php'
-      copy:
-        src: "{{ wp_instalation_dir }}/wp-config-sample.php"
-        dest: "{{ wp_instalation_dir }}/wp-config.php"
-        remote_src: yes
-      become: yes
-
-    - name: 'Configura o wp-config com os dados de acesso ao banco de dados'
-      replace:
-        path: "{{ wp_instalation_dir }}/wp-config.php"
-        regexp: "{{ item.regex }}"
-        replace: "{{ item.value }}"
-      loop:
-        - { regex: 'database_name_here', value: "{{ wp_db_name }}" }
-        - { regex: 'username_here', value: "{{ wp_db_username }}"}
-        - { regex: 'password_here', value: "{{ wp_db_password }}" }
-        - { regex: 'localhost', value: "{{ wp_database_ip }}" }
-      become: yes
-
- #   - name: 'Configura o Apache para servir o Wordpress'
- #     copy: 
- #       src: 'files/000-default.conf'
- #       dest: '/etc/apache2/sites-available/000-default.conf'
- #     become: yes
- #     notify:
- #       - restart apache
-      
-    - name: 'Configura o Apache para servir o Wordpress'
-      template: 
-        src: 'templates/000-default.conf.j2'
-        dest: '/etc/apache2/sites-available/000-default.conf'
-      become: yes
-      notify:
-        - restart apache
+  roles:
+    - webserver
+    - wordpress
 # End - Criando o servidor web - WordPress
 
 
 # Begin - Criando o servidor de banco de dados - MySQL
 - hosts: database
+  roles:
+    - mysql    
   become: yes
+# End - Criando o servidor de banco de dados - MySQL
 
-  handlers:
-    - name: restart mysql
-      service:
-        name: mysql
-        state: restarted
-      become: yes
-
-  tasks:
-    - name: 'Instala a lista de pacotes de dependencias'
-      apt:
-        name: "{{ item }}"
-        state: latest
-      become: yes
-      loop:
-        - mysql-server-8.0
-        - python3-mysqldb
-
-    - name: 'Cria O banco de dados wordpressdb no MySQL'
-      mysql_db:
-        name: "{{ wp_db_name }}"
-        login_user: root
-        state: present
-
-    - name: 'Crie o usuário do banco de dados com o nome wordpress_user com todos os privilégios do banco de dados'
-      mysql_user:
-        login_user: root
-        name: "{{ wp_db_username }}"
-        password: "{{ wp_db_password }}"
-        priv: "{{ wp_db_name }}.*:ALL"
-        state: present
-        host: "{{ item }}"
-      loop:
-        - 'localhost'
-        - '127.0.0.1'
-        - "{{ wp_network_range_ip }}"
-      no_log: true
-
-    - name: 'Configura o MySQL para aceitar conexões remotas'
-      copy:
-        src: 'files/mysqld.cnf'
-        dest: '/etc/mysql/mysql.conf.d/mysqld.cnf'
-      become: yes
-      notify:
-        - restart mysql
-    
 ...
