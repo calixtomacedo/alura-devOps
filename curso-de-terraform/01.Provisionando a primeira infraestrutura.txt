@@ -35,3 +35,7 @@ Atualizando o Python
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt-get install python3.9
+
+User name IAM
+terraform-aws
+
