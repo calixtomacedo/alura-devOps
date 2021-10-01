@@ -1,0 +1,9 @@
+01.Provisionando a primeira infraestrutura
+
+ E eu tenho aqui os paths definidos. Toda vez que o meu shell é carregado, ele lê esse arquivo aqui. O que tiver nesse diretório, ele já coloca no meu path. Então, possivelmente, você já tem uma linha aqui embaixo dizendo o seguinte: “.local/bin” já está definido no teu path. Rodei aqui, não tem. Como é que eu faço isso? Como é que eu coloco?
+
+[05:23] Bom, você pode pegar uma linha, incluir aqui no meio ou, simplesmente, no final você pode dizer que a variável path pega o teu home, importante, em letra maiúscula “PATH=“HOME/.local/bin”. Ela vai pegar esse diretório e vai incluir no path. Mas e o resto do path? Você coloca dois pontos (:), aqui o dólar “${PATH}”. E finalizando, “export PATH”. Só isso.
+
+
+PATH="HOME/.local/bin:${PATH}"
+export PATH

@@ -4,7 +4,7 @@ Alura: Formação DevOps
 
 - 01 curso-de-vagrant - Curso de Vagrant: Gerenciando máquinas virtuais
 - 02 curso-de-ansible - Curso de Ansible: Sua infraestrutura como código
-- 03
+- 03 curso-de-terraform - Curso de Terraform: Automatize a infraestrutura na nuvem
 - 04
 - 05
 - 06
