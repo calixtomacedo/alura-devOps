@@ -35,3 +35,7 @@ terraform-aws
 Group name
 admin
 
+Key id: AKIASQA54DL76AHVDKUA
+Access key: 1UoQbLICKE3bD4aW8hs3xL7xUH7D9mVsPzQbCh61
+region: us-east-1
+format: json
