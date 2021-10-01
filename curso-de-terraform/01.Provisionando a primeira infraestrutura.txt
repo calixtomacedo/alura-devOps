@@ -28,3 +28,7 @@ Optei por essa maneira pois é como ensina na DOC
 move para uma pasta que esta no path
 sudo mv terraform /usr/local/bin/
 
+
+User name IAM
+terraform-aws
+
