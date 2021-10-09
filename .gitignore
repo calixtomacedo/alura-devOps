@@ -6,6 +6,8 @@
 
 # keys
 *.pub
+*.vscode
+*.terraform*
 
 # BlueJ files
 *.ctxt

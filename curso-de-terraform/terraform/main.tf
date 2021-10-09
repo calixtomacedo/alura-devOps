@@ -1,9 +1,8 @@
 provider "aws" {
-    version = "~> 3.27"
+    #version = "~> 3.27"
     region  = "us-east-1"
 }
 
-O references
 resource "aws_instance" "dev" {
     count = 3
     ami = "ami-09e67e426f25ce0d7"
