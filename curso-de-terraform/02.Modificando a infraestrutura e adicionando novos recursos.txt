@@ -1,0 +1,3 @@
+02.Modificando a infraestrutura e adicionando novos recursos
+
+terraform show
