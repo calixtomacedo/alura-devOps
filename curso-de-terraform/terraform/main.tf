@@ -48,7 +48,7 @@ resource "aws_instance" "dev" {
   tags = {
     Name = "dev${count.index}"
   }
-  vpc_security_group_ids = ["sg-0494f947ad5a9858c"]
+  vpc_security_group_ids = ["${aws_security_group.acesso-ssh.id}"]
 }
 
 resource "aws_security_group" "acesso-ssh" {
@@ -65,5 +65,14 @@ resource "aws_security_group" "acesso-ssh" {
   }
   tags = {
     Name = "ssh"
+  }
+}
+
+resource "aws_s3_bucket" "dev4" {
+  bucket = "calixto-dev4"
+  acl    = "private"
+
+  tags = {
+    Name        = "calixto-dev4"
   }
 }
