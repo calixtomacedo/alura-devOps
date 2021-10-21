@@ -33,7 +33,6 @@ docker images
 remover imagem
 docker rmi hello-world
 
-
 criando um container que segurará um site estático
 docker run dockersamples/static-site
 

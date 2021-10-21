@@ -1,1 +1,27 @@
 03.Usando volumes
+
+1 - Salvando dados com volumes
+criando um container de forma que ele persista no docler host
+docker run  -v "/var/www" ubuntu
+
+inspecionar no container
+docker inspect  ID do container
+
+definindo o caminho a ser criado a pasta
+docker run -it -v "home/cmdevub/calixto/dockers:/var/www" ubuntu
+
+criando um arquivo na pasta
+cd var/www/
+touch novo-arquivo.txt
+
+Escrevendo algo no arquivo
+echo "Este arquivo foi criado dentro de um volume" > novo-arquivo.txt
+
+
+2 - Rodando código em um container
+docker run -d -p 8080:3000 -v "home/cmdevub/calixto/volume-exemplo:/var/www" -w "/var/www" node npm start
+-d detet não trava o console
+-w = working direct
+
+vou para a pasta onde esta o fonte e rodo o pwd
+docker run -d -p 8080:3000 -v "$(pwd):/var/www" -w "/var/www" node npm start
