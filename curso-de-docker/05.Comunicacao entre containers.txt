@@ -1,0 +1,47 @@
+05.Comunicação entre containers
+
+criando uma containers para o ubuntu
+docker run -it --name server-db ubuntu
+docker run -it --name server-web ubuntu
+
+pega o IP da maquina
+hostname -i
+
+
+docker inspect id container
+
+instalando o ping no ubuntu
+apt-get update && apt-get install -y iputils-ping
+
+
+Criando a nossa própria rede do Docker
+docker network create --driver bridge cmdev-network
+
+Listando as redes
+docker network ls
+
+Criando um container e atrelando a uma rede
+docker run -it --name server-load --network cmdev-network ubuntu
+
+
+Mantando um container
+docker rm -f server-web
+
+docker run -it --name server-db --network cmdev-network ubuntu
+
+Pegando dados de um banco em um outro container
+Baixar as imagens do Douglas 
+docker pull douglasq/alura-books:cap05
+docker pull mongo
+
+docker run -d -p 8080:3000 douglasq/alura-books:cap05
+
+docker run -d --name meu-mongo --network cmdev-network mongo
+docker run -d -p 8080:3000 --network cmdev-network douglasq/alura-books:cap05
+
+
+Inspecionando a rede
+docker network inspect cmdev-network
+
+url para polular o banco de dados
+http://localhost:8080/seed

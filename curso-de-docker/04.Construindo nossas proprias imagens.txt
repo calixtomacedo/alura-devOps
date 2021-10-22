@@ -1,0 +1,41 @@
+04.Construindo nossas próprias imagens
+
+Dockerfile
+FROM node:latest
+LABEL key="Calixto Macedo"
+ENV NODE_ENV=production
+ENV PORT=3000
+COPY . /var/www
+WORKDIR /var/www
+RUN npm install
+ENTRYPOINT [ "npm", "start" ]
+EXPOSE ${PORT}
+
+
+Criando/Buildando uma imagem
+docker build -f Dockerfile -t cmdev-node .
+
+visualizando a imagem criada
+docker images
+
+Criando um container apartir da imagem criada
+docker run -d -p 8080:3000 cmdev-node
+
+criando a tag
+docker tag cmdev-node cmdev-node:latest
+
+
+https://hub.docker.com/
+
+logando no docker hub
+docker login
+
+Subindo pro docker hub
+docker push calixtomacedo/cmdev-node:latest
+
+docker tag local_image:tagname new_repo:tagname
+docker push new_repo:tagname
+
+Baixando uma imagem criada
+docker pull calixtomacedo/cmdev-node
+
