@@ -11,7 +11,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - production-networ
+      - production-network
     depends_on:
       - "node1"
       - "node2"

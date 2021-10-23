@@ -70,6 +70,28 @@ network:
     driver: bridge
     
     
- buildar o docker-compose
+buildar o docker-compose
  
- docker-compose build
+docker-compose build
+
+subindo tudo
+docker-compose up
+
+pra não travar o console
+docker-compose up -d
+docker ps
+
+Ver o estado do container
+docker-compose ps
+
+Parar e remover os containers
+docker-compose down
+
+E não é por que eles são serviços, que eles não tem um container por debaixo dos panos, então nós conseguimos interagir com os containers utilizando todos os comandos que já vimos no treinamento, por exemplo para testar a comunicação entre eles:
+docker exec -it alura-books-1 ping alura-books-2
+
+Reinicializando containers
+docker-compose down
+docker-compose up
+
+
