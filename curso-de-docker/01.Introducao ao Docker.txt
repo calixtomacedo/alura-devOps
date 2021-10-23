@@ -26,6 +26,19 @@ sudo docker version
 
 8 - E para executar o Docker sem precisar de sudo, adicione o seu usuário ao grupo docker:
 sudo usermod -aG docker $(whoami)
+sudo usermod -aG docker ${USER}
 
 subindo uma imagem hello-world
 docker run hello-world
+
+
+Failed to start docker.service: Unit is masked
+
+sudo systemctl unmask docker
+sudo systemctl start docker
+sudo systemctl stop docker
+sudo systemctl restart docker
+sudo systemctl status docker
+
+habilitar para iniciar junto com o SO
+sudo systemctl enable docker
