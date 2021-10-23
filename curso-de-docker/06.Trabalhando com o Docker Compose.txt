@@ -1,0 +1,75 @@
+06.Trabalhando com o Docker Compose
+
+docker-compose.yml
+
+version: '3.8'
+
+service:
+
+  nginx:
+    build:
+      dockerfile: ./docker/nginx.dockerfile
+      context: .
+    image: douglasq/nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    network:
+      - production-networ
+    depends_on:
+      - "node1"
+      - "node2"
+      - "node3"
+
+  mongodb:
+    image: mongo
+    network:
+      - production-network
+
+  node1:
+    build:
+      dockerfile: ./docker/alura-books.doclerfile
+      context: .
+    image: douglasq/alura-books
+    container_name: alura-books-1
+    ports:
+      - "3000"
+    network:
+      - production-network
+    depends_on:
+      - "mongodb"
+
+  node2:
+    build:
+      dockerfile: ./docker/alura-books.doclerfile
+      context: .
+    image: douglasq/alura-books
+    container_name: alura-books-2
+    ports:
+      - "3000"
+    network:
+      - production-network
+    depends_on:
+      - "mongodb"
+
+  node3:
+    build:
+      dockerfile: ./docker/alura-books.doclerfile
+      context: .
+    image: douglasq/alura-books
+    container_name: alura-books-3
+    ports:
+      - "3000"
+    network:
+      - production-network
+    depends_on:
+      - "mongodb"
+
+network:
+  production-network:
+    driver: bridge
+    
+    
+ buildar o docker-compose
+ 
+ docker-compose build
