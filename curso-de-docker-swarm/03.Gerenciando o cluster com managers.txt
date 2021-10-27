@@ -1,0 +1,4 @@
+03.Gerenciando o cluster com managers
+
+Criando um claster/Swarm
+docker swarm init --advertise-addr 192.168.99.112
