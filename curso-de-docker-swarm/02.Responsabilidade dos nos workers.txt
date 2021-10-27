@@ -1,0 +1,4 @@
+02.Responsabilidade dos nós workers
+
+listar os nós:
+docker node ls Esse comando deve ser executado sempre no nó manager/lider
