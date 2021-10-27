@@ -1,0 +1,3 @@
+01.Cluster com Docker Swarm
+
+Não fiz nenhuma anotação por enquanto porque o docker-machine foi descontinuado (Deprecated)
