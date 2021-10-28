@@ -1,0 +1,4 @@
+07.Deploy com Docker Stack
+
+
+Refazer esse curso no futuro
