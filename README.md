@@ -7,8 +7,8 @@ Alura: Formação DevOps
 - 02 curso-de-ansible - Curso de Ansible: Sua infraestrutura como código
 - 03 curso-de-terraform - Curso de Terraform: Automatize a infraestrutura na nuvem
 - 04 curso-de-docker - Curso de Docker: Criando containers sem dor de cabeça
-- 05
-- 06
+- 05 curso-de-docker-swarm - Curso de Docker Swarm: Orquestrador de containers
+- 06 curso-de-kubernetes - Curso de Kubernetes: Pods, Services e ConfigMaps
 - 07
 - 08
 - 09
