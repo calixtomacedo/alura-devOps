@@ -1,0 +1,4 @@
+02.Criando o cluster
+
+kubectl get nodes
+
