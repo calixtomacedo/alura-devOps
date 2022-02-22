@@ -1,0 +1,24 @@
+03.Criando e entendendo pods
+
+Criar um pod: 
+kubectl run nginx-pod --image=nginx:latest
+
+kubectl get pods
+
+kubectl get pods --watch
+
+kubectl describe pod nginx-pod
+
+Editar um POD
+kubectl edit pod nginx-pod
+
+kubectl apply -f caminho\nome-do-arquivo
+
+
+Deletando um pod
+kubectl delete pod nginx-pod1
+
+kubectl delete -f caminho\nome-do-arquivo
+
+kubectl get pods -o wide
+

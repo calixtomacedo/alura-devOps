@@ -1,0 +1,14 @@
+kubectl apply .\svc-pod-2.yaml
+
+kubectl get svc
+
+kubectl get service
+
+Executando um pod
+kubectl exec -it pod-1 -- bash
+
+acessando uma pagina via curl
+curl 10.105.201.161:80
+
+
+kubectl get nodes -o wide
