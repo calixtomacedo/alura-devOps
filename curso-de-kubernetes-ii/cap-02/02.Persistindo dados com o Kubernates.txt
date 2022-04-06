@@ -1,0 +1,17 @@
+kubectl apply -f .\pod-volume.yaml
+
+kubectl get pods
+
+kubectl exec -it pod-volume --container nginx-container -- bash
+
+ls
+
+cd volume-dentro-do-container
+
+touch arquivo.txt
+
+kubectl exec -it pod-volume --container jenkins-container -- bash
+
+cd volume-dentro-do-container
+
+touch outro-arquivo.txt

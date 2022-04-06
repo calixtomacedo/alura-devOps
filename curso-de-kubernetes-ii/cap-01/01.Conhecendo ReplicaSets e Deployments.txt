@@ -1,0 +1,48 @@
+01.Conhecendo ReplicaSets e Deployments
+
+
+kubectl apply -f .\nginx-deployment.yaml
+
+kubuctl get pods
+
+kubectl get rs
+
+kubectl get deployment
+
+kubectl rollout history deployment nginx-deployment
+
+
+kubectl apply -f .\nginx-deployment.yaml --record
+
+kubectl annotate deployment nginx-deployment kubernetes.io/change-cause="Definindo a imagem com a versão latest"
+
+kubectl rollout history deployment nginx-deployment
+
+kubectl describe pod nginx-deployment-6d8bdc7876-j94cm
+
+
+kubectl rollout undo deployment nginx-deployment --to-revision=2
+
+
+kubectl delete deployment nginx-deployment
+
+kubectl delete -f .\portal-noticias-replicaset.yaml
+
+
+kubectl rollout history deployment portal-noticias-deployment
+
+kubectl annotate deployment portal-noticias-deployment kubernetes.io/change-cause="Criando o portal de noticias na versão 1"
+
+Criando um deployment para o sistema de noticias
+sistema-noticias-deployment.yaml
+
+kubectl delete pod sistema-noticias
+
+kubectl apply -f .\sistema-noticias-deployment.yaml
+
+kubectl annotate deployment sistema-noticias-deployment kubernetes.io/change-cause="Subindo o sistema na versão 1"
+
+kubectl get pods
+
+
+kubectl annotate deployment db-noticias-deployment kubernetes.io/change-cause="Subindo o banco na versão 1"
