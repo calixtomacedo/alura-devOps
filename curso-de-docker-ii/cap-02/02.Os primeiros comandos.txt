@@ -19,3 +19,22 @@ docker start + id do container
 
 Iniciar um container e executa-lo no modo iterativo
 docker exec -it + id bash
+
+Cria um arquivo no linux
+touch eu-sou-um-arquivo.txt
+
+docker rm + id do container
+
+docker run -it ubuntu bash
+
+-d não deixa travar o terminal
+docker run -d dockersamples/static-site
+
+docker rm id do container --force
+
+Definindo uma porta
+docker run -d -P dockersamples/static-site
+
+docker port + id do container
+
+docker run -d -p 8080:80 dockersamples/static-site
