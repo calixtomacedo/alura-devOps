@@ -1,0 +1,21 @@
+como baixar uma imagem do repositório
+
+docker pull ubuntu
+
+docker rum ubuntu
+
+docker rum ubuntu sleep 1d
+
+docker ps
+docker container ls
+
+docker ps -a
+
+parar um container
+docker stop + id
+
+iniciar um container
+docker start + id do container
+
+Iniciar um container e executa-lo no modo iterativo
+docker exec -it + id bash
