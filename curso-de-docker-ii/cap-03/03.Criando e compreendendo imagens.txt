@@ -1,6 +1,5 @@
 03.Criando e compreendendo imagens
 
-<<<<<<< HEAD
 Visualizando todas as images
 docker images
 
@@ -24,7 +23,8 @@ docker run -d -p 8082:3000 calixto/app-node:1.0
 
 Comando para parar todos os container
 docker stop $(docker container ls -q)
-=======
+
+
 docker run hello-world
 
 https://hub.docker.com/
@@ -98,4 +98,3 @@ docker tag calixto/app-node:1.0 calixtomacedo/app-node:1.0
 
 E agora damos o push com o novo nome de imagem
 docker push calixtomacedo/app-node:1.0
->>>>>>> b7bac80a2215e0a6e0a7650baca72da71593718a
