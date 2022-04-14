@@ -1,3 +1,75 @@
 03.Criando e compreendendo imagens
 
+docker run hello-world
 
+https://hub.docker.com/
+
+docker run ubuntu
+
+docker ps = Lista todos os container ativos no momento
+
+docker ps -a = Lista todos os container inclusive os parados
+
+docker run ubuntu echo "Olá Mundo"
+
+docker run -it ubuntu = Muda o terminal pra o container
+
+docker start id do container
+
+docker stop id do container
+
+Subir o container e levar o terminal pra dentro dele
+docker start -a -i id do container
+
+deletar um container
+docker rm id do container
+
+deletar/remover todos os container parados
+docker container prune
+
+listar as imagens docker
+docker images
+
+remover imagem
+docker rmi hello-world
+
+criando um container que segurará um site estático
+docker run dockersamples/static-site
+
+mode detet
+docker run -d dockersamples/static-site
+
+matar o container estantaneamente
+docker stop -t 0 id do container
+
+docker run -d -P dockersamples/static-site
+
+docker port id do container
+
+Criando um alias para o IP
+docker run -d -P --name calixto dockersamples/static-site
+
+Definindo uma porta específica
+docker run -d -p 12345:80 dockersamples/static-site
+
+Atribuindo uma variável de ambiente
+
+docker run -d -P -e AUTHOR="Calixto Macedo" dockersamples/static-site
+
+Listar os ID os container
+docker ps -q
+
+docker stop $(docker ps -q)
+
+Para publicar uma imagem no docker hub devemos seguir os passas abaixo
+Logar pelo console
+docker login -u calixtomacedo
+
+docker push nome-da-imagem:versao ==> vai dar access denied
+docker push calixto/app-node:1.0
+
+criar uma tag
+docker tag calixto/app-node:1.0 calixtomacedo/app-node:1.0
+
+E agora damos o push com o novo nome de imagem
+docker push calixtomacedo/app-node:1.0
