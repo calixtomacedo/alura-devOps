@@ -1,0 +1,29 @@
+Revendo todos os container
+docker container rm $(docker container ls –aq)
+
+Revendo todos os container images
+docker rmi $(docker image ls –aq) --force
+
+Criar um container com um volume usando o -v
+docker run -it --name ubuntu-01 -v /home/cmdev/docker-volume:/app ubuntu bash
+
+Cria um arquivo:
+touch arquivo-qualquer.txt
+echo Calixto Macedo >> arquivo-qualquer.txt
+
+
+Mais recomendado criando com Mount
+docker run -it --name ubuntu-04 --mount type=bind,source=/home/cmdev/docker-volume,target=/app ubuntu bash
+
+docker volume ls
+
+docker volume create docker-volume
+
+Mais recomendado
+docker run -it -v docker-volume:/app --name ubuntu-05 ubuntu bash
+
+Onde fica armazenado o docker
+cd /var/lib/docker/
+
+Criando com Mount
+docker run -it --name ubuntu-06 --mount source=docker-volume,target=/app ubuntu bash
