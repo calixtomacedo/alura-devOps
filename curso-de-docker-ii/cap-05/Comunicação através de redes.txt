@@ -1,0 +1,13 @@
+Comunicação através de redes
+
+Listando as redes disponivéis
+docker network ls
+
+Instala a ferramento de ping 
+apt-get install iputils-ping -y
+
+Criando sua própria rede
+docker network create --driver bridge docker-network
+
+docker run -it --name ubuntu-01 --network docker-network ubuntu bash
+
