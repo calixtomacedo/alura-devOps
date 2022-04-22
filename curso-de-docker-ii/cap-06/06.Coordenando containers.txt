@@ -24,4 +24,4 @@ networks:
     driver: bridge
 	
 no diretorio onde esta o docker-compose.yml rodar o sequinte comando:
-docker-compose up
+docker-compose up -d
