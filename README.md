@@ -15,3 +15,5 @@ Alura: Formação DevOps
 - 10 curso-de-jenkins-e-docker - Curso de Jenkins e Docker: Pipeline de entrega continua
 - 11 curso-de-gitlab-ci-e-docker - Curso de Gitlab CI e Docker: Pipeline de entrega contínua
 - 12 curso-de-grafana-e-telegraf - Curso de Grafana e Telegraf: Monitoramento em tempo real
+
+Teste
